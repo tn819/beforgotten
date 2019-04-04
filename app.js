@@ -3,7 +3,6 @@ const hb = require("express-handlebars");
 const path = require("path");
 const app = express();
 const dotenv = require("dotenv");
-const atob = require("atob");
 const csurf = require("csurf");
 const moment = require("moment");
 
@@ -42,24 +41,19 @@ app.use((req, res, next) => {
 });
 
 //initial GET from site - load home page
-// /petition route greeting users
 app.get("/petition", (req, res) => {
     console.log("GET petition route");
     res.render("forms");
 });
 
 // first name/last name/ hidden input: canvas element
-//toDataUrl response of hidden input
 app.post("/petition", (req, res) => {
-    console.log("POST petition route with:");
     db.addSigner(req.body.firstname, req.body.lastname, req.body.signatureURL)
         .then(queryResult => {
-            console.log("signature logged", queryResult);
             req.session.sigID = queryResult.rows[0].id;
             res.redirect("/thanks");
         })
         .catch(err => {
-            console.log(err);
             res.redirect("/invalid");
         });
 });
@@ -83,11 +77,10 @@ app.get("/thanks", (req, res) => {
 app.get("/signatures", (req, res) => {
     db.listSigners()
         .then(results => {
-            console.log(results.rows[0].sigtime);
             let signers = [];
             results.rows.map(result =>
                 signers.push({
-                    sigTime: moment(result.sigtime).format(
+                    sigtime: moment(result.sigtime).format(
                         "dddd, MMMM Do YYYY"
                     ),
                     firstname: result.firstname,
