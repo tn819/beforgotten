@@ -9,6 +9,7 @@
         <input type="text" name="firstname" value="" placeholder="First Name">
         <input type="text" name="lastname" value="" placeholder="Last Name">
         <input type="hidden" name="signatureURL" />
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
     </div>
     <canvas id="signature" height=100 width=400></canvas>
     <button type="submit" name="button">Submit</button>

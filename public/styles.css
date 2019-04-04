@@ -50,5 +50,21 @@ canvas {
     border: 5px black solid;
 }
 
-/*THANKS*/
-.sigImage;
+/*signatures*/
+.sigList {
+    display: grid;
+    width: 80%;
+    grid-template-rows: 60px;
+    grid-auto-rows: 40px;
+}
+.sigLine,
+.sigListTitle {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+}
+.sigListTitle {
+    border-bottom: 5px black solid;
+}
+.sigLine div {
+    max-height: 100%;
+}

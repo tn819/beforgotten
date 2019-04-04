@@ -1,0 +1,21 @@
+<h2>Look at who else has joined you in their vague support {{ visitor }}</h2>
+<div class="sigList">
+    <div class="sigListTitle">
+        <div class="sigName">
+            <h3>Name</h3>
+        </div>
+        <div class="sigDate">
+            <h3>Date</h3>
+        </div>
+    </div>
+    {{#signers}}
+    <div class="sigLine">
+        <div class="sigName">
+            <h4>{{firstname}} {{lastname}}</h4>
+        </div>
+        <div class="sigDate">
+            <h4>{{sigtime}}</h4>
+        </div>
+    </div>
+    {{/signers}}
+</div>
