@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+    font-family: Georgia;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding: 15px;
+}
+h1 {
+    font-size: calc(30px + 2em);
+    width: 60%;
+}
+.info {
+    font-size: calc(15px + 0.5em);
+    width: 80%;
+}
+/*FORM*/
+.signature {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    height: 40%;
+    width: 80%;
+}
+.names {
+    display: flex;
+    width: 100%;
+    min-height: 100px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.names input {
+    height: 30px;
+    min-width: 200px;
+}
+canvas {
+    width: 400px;
+    height: 100px;
+    border-radius: 15px;
+    border: 5px black solid;
+}
+
+/*THANKS*/
+.sigImage;
