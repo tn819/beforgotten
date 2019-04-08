@@ -1,0 +1,12 @@
+<form class="signature" action="/login" method="POST">
+    <div class="login">
+        <input type="email" name="email" placeholder="email"/>
+        <input type="password" name="password" placeholder="password" />
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </div>
+    <div class="confirm">
+        <button type="submit" name="login">Log in</button>
+        <a class="button" href="register">Register</a>
+    </div>
+    <div name="error" value=""></div>
+</form>

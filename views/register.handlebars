@@ -1,0 +1,14 @@
+<form class="signature" action="/register" method="POST">
+    <div class="login">
+        <input type="email" name="email" placeholder="joe@acme.org" required/>
+        <input type="text" name="firstname" value="" placeholder="First Name" required>
+        <input type="text" name="lastname" value="" placeholder="Last Name" required>
+        <div>
+            <input type="password" name="password" placeholder="password" />
+            <h5>8-16 characters (no spaces) and include both lowercase and uppercase letters, as well numbers</h5>
+        </div>
+        <div name="error"></div>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </div>
+    <button type="submit" name="register">Register</button>
+</form>

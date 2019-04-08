@@ -17,7 +17,11 @@ app.set("views", path.join(__dirname, "views"));
 
 //directory work
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static(path.join(__dirname, "scripts")));
+app.use(express.static(path.join(__dirname, "utils")));
+app.use(express.static(path.join(__dirname, "db")));
+
+const db = require("./utils/db");
+const register = require("./utils/register");
 
 //cookie set up
 const cookieSession = require("cookie-session");
@@ -27,9 +31,8 @@ app.use(
         secret: process.env.secret
     })
 );
-//request.session.sigID can be put into cookie
 
-const db = require("./scripts/db");
+//headers and cookies middleware
 app.use(require("body-parser").urlencoded({ extended: false }));
 app.use(csurf());
 app.use((req, res, next) => {
@@ -38,6 +41,65 @@ app.use((req, res, next) => {
     res.locals.csrfToken = req.csrfToken();
     //include name of signers, res.locals.signerName
     next();
+});
+
+app.get("/login", (req, res) => {
+    console.log("GET login route");
+    res.render("login", { layout: "main" });
+});
+
+app.post("/login", (req, res) => {
+    console.log("POST login route");
+
+    db.getUser(req.body.email)
+        .then(result => {
+            req.session.sigID = result.rows[0].email;
+            req.session.firstname = result.rows[0].firstname;
+            req.session.lastname = result.rows[0].lastname;
+            db.checkPassword(req.body.password, result.rows[0].password);
+        })
+        .then(result => {
+            if (result === true) {
+                res.redirect("/petition");
+            } else {
+                res.send("Incorrect password");
+                res.redirect("/");
+            }
+        })
+        .catch(err => res.redirect("/"));
+});
+
+app.get("/register", (req, res) => {
+    console.log("GET register route");
+    res.render("register", { layout: "main" });
+});
+
+app.post("/register", (req, res) => {
+    console.log("POST register route");
+    register
+        .checkValidRegistration(
+            req.body.firstname,
+            req.body.lastname,
+            req.body.email,
+            req.body.password
+        )
+        .then(inputs => {
+            db.addUser(
+                inputs.firstname,
+                inputs.lastname,
+                inputs.email,
+                inputs.password
+            );
+        })
+        .then(result => {
+            req.session.sessionID = result.rows[0].email;
+            req.session.firstname = result.rows[0].firstname;
+            req.session.lastname = result.rows[0].lastname;
+            res.redirect("/login");
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 //initial GET from site - load home page
@@ -50,7 +112,7 @@ app.get("/petition", (req, res) => {
 app.post("/petition", (req, res) => {
     db.addSigner(req.body.firstname, req.body.lastname, req.body.signatureURL)
         .then(queryResult => {
-            req.session.sigID = queryResult.rows[0].id;
+            req.session.signed = req.body.signatureURL;
             res.redirect("/thanks");
         })
         .catch(err => {
@@ -63,7 +125,7 @@ app.get("/thanks", (req, res) => {
     db.listSigners()
         .then(signerList => {
             let { signature } = signerList.rows.filter(
-                signee => signee.id == req.session.sigID
+                signee => signee.email == req.session.sessionID
             )[0];
             res.render("thanks", {
                 layout: "main",
@@ -75,7 +137,7 @@ app.get("/thanks", (req, res) => {
 });
 
 app.get("/signatures", (req, res) => {
-    db.listSigners()
+    db.listFullSigners()
         .then(results => {
             let signers = [];
             results.rows.map(result =>
@@ -99,10 +161,13 @@ app.get("/invalid", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    if (req.session.sigID) {
+    if (req.session.signed) {
         res.redirect("/thanks");
+    } else if (req.session.email) {
+        res.redirect("/petition");
+    } else {
+        res.redirect("/login");
     }
-    res.redirect("/petition");
 });
 
 app.listen(8080, () => console.log("listening.."));

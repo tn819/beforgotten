@@ -1,6 +1,8 @@
 * {
     box-sizing: border-box;
     font-family: Georgia;
+    margin: 0px;
+    padding: 0px;
 }
 body {
     display: flex;
@@ -10,7 +12,6 @@ body {
     align-items: center;
     height: 100vh;
     width: 100vw;
-    padding: 15px;
 }
 h1 {
     font-size: calc(30px + 2em);
@@ -27,7 +28,7 @@ h1 {
     justify-content: space-around;
     text-align: center;
     align-items: center;
-    height: 40%;
+    height: 55%;
     width: 80%;
 }
 .names {
@@ -67,4 +68,53 @@ canvas {
 }
 .sigLine div {
     max-height: 100%;
+}
+
+/* Log-in register */
+
+a.button,
+button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+    font-size: 20px;
+    height: 30px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.confirm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 250px;
+    width: 45%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.login {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    height: 70%;
+}
+.login input {
+    height: 30px;
+    width: 100%;
+}
+
+.login div input {
+    margin: 0px;
+    padding: 0px;
 }

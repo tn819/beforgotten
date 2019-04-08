@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "test": "jest",
-        "start": "node index.js"
+        "start": "node app.js"
     },
     "engines": {
         "node": "10.15.3"
@@ -25,10 +25,12 @@
         "express-session": "^1.14.1",
         "jest": "^24.5.0",
         "moment": "^2.24.0",
+        "password-validator": "^4.1.1",
         "path": "^0.12.7",
         "redis": "^2.6.2",
         "signature_pad": "^3.0.0-beta.3",
         "spiced-pg": "^1.0.0",
-        "supertest": "^4.0.2"
+        "supertest": "^4.0.2",
+        "validator": "^10.11.0"
     }
 }
