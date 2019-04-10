@@ -1,0 +1,29 @@
+<form class="signature" action="/profile" method="POST">
+    <h2>Tell us a bit about yourself!</h2>
+    <div class="login">
+
+        <div class="profileRow">
+            <label for "age">Your age</label>
+            <input type="number" min="1" max="125" name="age" placeholder="Age">
+        </div>
+        <div class="profileRow">
+            <label for "url">Your website (only http://, https://, // accepted)</label>
+            <input type="url" name="url" pattern="(^http(s)?:\/\/|^\/\/)\S+[.]\S+$" placeholder="https://example.com">
+        </div>
+        <div class="profileRow">
+            <label for "city">Your city</label>
+            <input type="text" name="city" placeholder="City"/>
+            <div class="cityresults">
+            </div>
+        </div>
+        {{#if error}}
+            <div class="error">
+                {{error}}
+            </div>
+        {{else}}
+        {{/if}}
+
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </div>
+    <button type="submit" name="profile">Submit</button>
+</form>

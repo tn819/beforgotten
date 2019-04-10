@@ -8,5 +8,11 @@
         <button type="submit" name="login">Log in</button>
         <a class="button" href="register">Register</a>
     </div>
-    <div name="error" value=""></div>
+    {{#if error}}
+        <div class="error">
+            {{error}}
+        </div>
+    {{else}}
+    {{/if}}
+
 </form>

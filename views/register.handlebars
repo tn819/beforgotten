@@ -5,9 +5,15 @@
         <input type="text" name="lastname" value="" placeholder="Last Name" required>
         <div>
             <input type="password" name="password" placeholder="password" />
-            <h5>8-16 characters (no spaces) and include both lowercase and uppercase letters, as well numbers</h5>
+            <h5>8-16 characters (no spaces) and include: lowercase and uppercase letters and a number</h5>
         </div>
-        <div name="error"></div>
+
+        {{#if error}}
+            <div class="error">
+                {{error}}
+            </div>
+        {{else}}
+        {{/if}}
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
     </div>
     <button type="submit" name="register">Register</button>

@@ -6,8 +6,8 @@
 
 <form class="signature" action="/petition" method="POST">
     <div class="names">
-        <input type="text" name="firstname" value="" placeholder="First Name">
-        <input type="text" name="lastname" value="" placeholder="Last Name">
+        <input type="text" name="firstname" value="{{firstname}}" placeholder="First Name">
+        <input type="text" name="lastname" value="{{lastname}}" placeholder="Last Name">
         <input type="hidden" name="signatureURL" />
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
     </div>
