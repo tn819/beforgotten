@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    font-family: Georgia;
+    font-family: "Roboto", sans-serif;
     margin: 0px;
     padding: 0px;
 }
@@ -12,15 +12,75 @@ body {
     align-items: center;
     height: 100vh;
     width: 100vw;
+    background-color: rgba(255, 239, 219, 0.3);
+}
+#top,
+#bottom,
+#left,
+#right {
+    background-color: #5b7eb3;
+    position: fixed;
+    z-index: 1;
+}
+#left,
+#right {
+    top: 0;
+    bottom: 0;
+    width: 15px;
+}
+#left {
+    left: 0;
+}
+#right {
+    right: 0;
+}
+
+#top,
+#bottom {
+    left: 0;
+    right: 0;
+    height: 15px;
+}
+#top {
+    top: 0;
+}
+#bottom {
+    bottom: 0;
 }
 h1 {
     font-size: calc(30px + 2em);
-    width: 60%;
+    width: 90%;
+    margin: 15px;
+    font-family: "Roboto Slab", serif;
+    color: #302099;
 }
-.info {
-    font-size: calc(15px + 0.5em);
-    width: 80%;
+h2 {
+    font-size: calc(20px + 1.5em);
+    width: 90%;
+    margin: 15px;
+    font-family: "Roboto Slab", serif;
+    color: #302099;
 }
+h3 {
+    font-size: calc(15px + 1em);
+    width: 90%;
+    margin: 5px;
+}
+h3 {
+    font-size: calc(10px + 0.75em);
+    width: 90%;
+    margin: 5px;
+}
+h5 {
+    font-size: calc(10px + 0.5em);
+    width: 90%;
+    margin: 5px;
+    font-family: "Roboto Slab", serif;
+}
+h6 {
+    font-size: 12px;
+}
+
 /*FORM*/
 .signature {
     display: flex;
@@ -28,9 +88,11 @@ h1 {
     justify-content: space-around;
     text-align: center;
     align-items: center;
-    height: 75%;
     width: 80%;
+    height: auto;
+    padding: 15px;
 }
+
 .names {
     display: flex;
     width: 100%;
@@ -39,6 +101,14 @@ h1 {
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
+}
+.sigcanvas {
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
 }
 .names input {
     height: 30px;
@@ -57,6 +127,7 @@ canvas {
     width: 80%;
     grid-template-rows: 60px;
     grid-auto-rows: 40px;
+    position: relative;
 }
 .sigLine,
 .sigListTitle {
@@ -106,10 +177,10 @@ button {
 }
 .login {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     width: 80%;
     padding: 10px;
     margin: 10px;
@@ -117,7 +188,12 @@ button {
 }
 .login input {
     height: 30px;
-    width: 100%;
+    min-width: 300px;
+}
+.login div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login div input {

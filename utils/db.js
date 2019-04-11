@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 var spicedPg = require("spiced-pg");
 const bcrypt = require("bcryptjs");
 
-var db = spicedPg(process.env.postgres);
+var db = spicedPg(process.env.DATABASE_URL);
 
 exports.addUser = (firstname, lastname, email, password) => {
     let q =
@@ -10,6 +10,7 @@ exports.addUser = (firstname, lastname, email, password) => {
     let params = [firstname, lastname, email, password];
     return db.query(q, params);
 };
+
 exports.deleteUser = userid => {
     let q = "DELETE FROM users WHERE userid = $1";
     let params = [userid];
@@ -36,34 +37,40 @@ exports.getUser = email => {
     return db.query(q, params);
 };
 
-exports.getFullUser = id => {
+exports.getFullUser = userid => {
     let q =
         "SELECT email, firstname, lastname, signature, sigtime, age, city, url FROM users JOIN signatures ON signatures.userid = users.userid JOIN profiles ON signatures.userid = profiles.userid WHERE users.userid=$1";
-    let params = [id];
+    let params = [userid];
     return db.query(q, params);
 };
 
 exports.addSigner = (signature, userid) => {
     let q =
-        "INSERT INTO signatures (signature, userid, sigtime) VALUES ($1, $2, current_timestamp) RETURNING signature";
+        "INSERT INTO signatures (signature, userid, sigtime) VALUES ($1, $2, current_timestamp) RETURNING signature, sigid";
     let params = [signature, userid];
     return db.query(q, params);
 };
+
 exports.deleteSigner = userid => {
     let q = "DELETE FROM signatures WHERE userid = $1";
     let params = [userid];
     return db.query(q, params);
 };
 
-exports.getSigners = id => {
+exports.getSigner = userid => {
     let q = "SELECT * FROM signatures WHERE userid = $1";
-    let params = [id];
+    let params = [userid];
     return db.query(q, params);
 };
 
-exports.existSigner = id => {
+exports.getSigners = () => {
+    let q = "SELECT * FROM signatures";
+    return db.query(q);
+};
+
+exports.existSigner = userid => {
     let q = "SELECT EXISTS(SELECT 1 FROM signatures WHERE userid = $1)";
-    let params = [id];
+    let params = [userid];
     return db.query(q, params);
 };
 
@@ -80,15 +87,15 @@ exports.addProfile = (age, url, city, userid) => {
     return db.query(q, params);
 };
 
-exports.getProfile = id => {
+exports.getProfile = userid => {
     let q = "SELECT * FROM profiles WHERE userid = $1";
-    let params = [id];
+    let params = [userid];
     return db.query(q, params);
 };
 
-exports.existProfile = id => {
+exports.existProfile = userid => {
     let q = "SELECT EXISTS(SELECT 1 FROM profiles WHERE userid=$1)";
-    let params = [id];
+    let params = [userid];
     return db.query(q, params);
 };
 

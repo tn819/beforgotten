@@ -5,6 +5,7 @@ const app = express();
 const dotenv = require("dotenv");
 const csurf = require("csurf");
 const moment = require("moment");
+const favicon = require("express-favicon");
 
 var bodyParser = require("body-parser");
 
@@ -34,16 +35,15 @@ app.use(
 
 //headers and cookies middleware
 app.use(require("body-parser").urlencoded({ extended: false }));
+app.use(favicon(__dirname + "/public/favicon.ico"));
 app.use(csurf());
 app.use((req, res, next) => {
     res.set("x-frame-options", "DENY");
-    //res.locals merged to handlebars transmitted template
     res.locals.csrfToken = req.csrfToken();
-    //include name of signers, res.locals.signerName
     next();
 });
 
-//routes
+//route - noAuth
 app.get("/login", (req, res) => {
     console.log("GET login route");
     res.render("login", { layout: "main" });
@@ -54,18 +54,26 @@ app.post("/login", (req, res) => {
 
     db.getUser(req.body.email)
         .then(result => {
-            req.session.userid = result.rows[0].userid;
-            req.session.email = result.rows[0].email;
-            req.session.firstname = result.rows[0].firstname;
-            req.session.lastname = result.rows[0].lastname;
+            const { userid, email, firstname, lastname } = result.rows[0];
+            console.log("initial get user", {
+                userid,
+                email,
+                firstname,
+                lastname
+            });
+            Object.assign(req.session, { userid, email, firstname, lastname });
+            console.log("initial login cookies", req.session);
             return db.checkPassword(req.body.password, result.rows[0].password);
         })
         .then(result => {
             console.log("password check result", result);
             return db.existProfile(req.session.userid);
         })
-        .then(exists => {
-            console.log("profile exists", exists);
+        .then(result => {
+            console.log("profile exists", !result.rows[0].exists);
+            if (!result.rows[0].exists) {
+                return res.redirect("/profile");
+            }
             return db.getProfile(req.session.userid);
         })
         .then(result => {
@@ -74,37 +82,8 @@ app.post("/login", (req, res) => {
             res.redirect("/petition");
         })
         .catch(err => {
-            if (!req.session.profileid) {
-                res.redirect("/profile");
-            }
             console.log(err);
-            res.render("login", { layout: "main", error: err });
-        });
-});
-
-app.get("/profile", (req, res) => {
-    res.render("profile", { layout: "main" });
-});
-
-app.post("/profile", (req, res) => {
-    register
-        .checkValidProfile(req.body.age, req.body.url, req.body.city)
-        .then(inputs => {
-            console.log("profile inputs:", inputs);
-            return db.addProfile(
-                inputs.age,
-                inputs.url,
-                inputs.city,
-                req.session.userid
-            );
-        })
-        .then(result => {
-            console.log(result);
-            req.session.profileid = result.rows[0].profileid;
-            res.redirect("/petition");
-        })
-        .catch(err => {
-            res.render("profile", { layout: "main", error: err });
+            return res.render("login", { layout: "main", error: err });
         });
 });
 
@@ -143,6 +122,82 @@ app.post("/register", (req, res) => {
                 error: err
             });
         });
+});
+
+//route - userid
+app.get("/profile", (req, res) => {
+    res.render("profile", { layout: "main" });
+});
+
+app.post("/profile", (req, res) => {
+    register
+        .checkValidProfile(req.body.age, req.body.url, req.body.city)
+        .then(inputs => {
+            console.log("profile inputs:", inputs);
+            return db.addProfile(
+                inputs.age,
+                inputs.url,
+                inputs.city,
+                req.session.userid
+            );
+        })
+        .then(result => {
+            console.log(result);
+            req.session.profileid = result.rows[0].profileid;
+            res.redirect("/petition");
+        })
+        .catch(err => {
+            res.render("profile", { layout: "main", error: err });
+        });
+});
+
+//route - profileid
+app.get("/petition", (req, res) => {
+    console.log("GET petition route");
+    db.getSigner(req.session.userid)
+        .then(results => {
+            console.log("signer exists at petition page", results.rows[0]);
+            if (results.rows[0]) {
+                req.session.sigid = results.rows[0].sigid;
+                console.log(req.session);
+                res.redirect("/thanks");
+            } else {
+                return res.render("forms", {
+                    firstname: req.session.firstname,
+                    lastname: req.session.lastname
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+app.post("/petition", (req, res) => {
+    db.addSigner(req.body.signatureURL, req.session.userid)
+        .then(result => {
+            req.session.sigid = result.rows[0].sigid;
+            res.redirect("/thanks");
+        })
+        .catch(err => {
+            console.log(err);
+            res.redirect("/invalid");
+        });
+});
+
+app.get("/thanks", (req, res) => {
+    db.getSigners()
+        .then(signerList => {
+            let { signature } = signerList.rows.filter(
+                signer => signer.userid === req.session.userid
+            )[0];
+            res.render("thanks", {
+                layout: "main",
+                signatureURL: signature,
+                signersList: signerList.rowCount
+            });
+        })
+        .catch(err => console.log(err));
 });
 
 app.get("/update", (req, res) => {
@@ -274,6 +329,7 @@ app.post("/update", (req, res) => {
     }
 });
 
+//route - sigid or user id
 app.get("/delete", (req, res) => {
     res.render("delete", { layout: "main" });
 });
@@ -284,6 +340,7 @@ app.post("/delete", (req, res) => {
             .then(result => {
                 req.session.sigid = null;
                 req.session.signature = null;
+                res.redirect("/");
             })
             .catch(err => {
                 res.render("delete", { layout: "main", error: err });
@@ -300,52 +357,7 @@ app.post("/delete", (req, res) => {
     }
 });
 
-app.get("/petition", (req, res) => {
-    console.log("GET petition route");
-    db.existSigner(req.session.userid)
-        .then(results => {
-            console.log(
-                "signer exists at petition page",
-                results.rows[0].exists
-            );
-            if (results.rows[0].exists) {
-                res.redirect("/thanks");
-            } else {
-                res.render("forms", {
-                    firstname: req.session.firstname,
-                    lastname: req.session.lastname
-                });
-            }
-        })
-        .catch(err => {});
-});
-
-app.post("/petition", (req, res) => {
-    db.addSigner(req.body.signatureURL, req.session.userid)
-        .then(queryResult => {
-            req.session.signature = req.body.signatureURL;
-            res.redirect("/thanks");
-        })
-        .catch(err => {
-            console.log(err);
-            res.redirect("/invalid");
-        });
-});
-
-app.get("/thanks", (req, res) => {
-    db.getSigners(req.session.userid)
-        .then(signerList => {
-            //console.log("signature list", signerList);
-            let { signature } = signerList.rows[0];
-            res.render("thanks", {
-                layout: "main",
-                signatureURL: signature,
-                signersList: signerList.rowCount
-            });
-        })
-        .catch(err => console.log(err));
-});
-
+//route - sigid
 app.get("/signatures", (req, res) => {
     db.getFullSigners()
         .then(results => {
@@ -418,4 +430,4 @@ app.get("/", (req, res) => {
     }
 });
 
-app.listen(8080, () => console.log("listening.."));
+app.listen(process.env.PORT || 8080, () => console.log("listening.."));

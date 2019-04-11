@@ -1,8 +1,4 @@
-<h1>Welcome to my Petition</h1>
-
-<div class="info">
-    <p>This is the core issue that I am most concerned about and if you sign you will learn what it is.</p>
-</div>
+<h5>In a time of largely misunderstood and nonconsensual data transactions of all sorts done with our information and establishing digital footprints that will have unforeseen consequences, we must provide a means for citizens to unplug and retain privacy in the digital world.</h5>
 
 <form class="signature" action="/petition" method="POST">
     <div class="names">
@@ -11,6 +7,8 @@
         <input type="hidden" name="signatureURL" />
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
     </div>
-    <canvas id="signature" height=100 width=400></canvas>
-    <button type="submit" name="button">Submit</button>
+    <div class="sigcanvas">
+        <canvas id="signature" height=100 width=400></canvas>
+        <button type="submit" name="button">Submit</button>
+    </div>
 </form>
