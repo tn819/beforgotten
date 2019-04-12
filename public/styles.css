@@ -143,8 +143,7 @@ canvas {
     max-height: 100%;
 }
 
-/* Log-in register */
-
+/* Log-in and register */
 .error {
     color: red;
 }
