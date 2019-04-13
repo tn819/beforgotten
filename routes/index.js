@@ -12,7 +12,7 @@ router.use(
 );
 
 router.get("/invalid", (req, res) => {
-    res.render("invalid", { layout: "main" });
+    res.render("invalid", { layout: "main", error: err || null });
 });
 router.get("/", (req, res) => {
     if (req.session.sigid) {

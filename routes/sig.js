@@ -44,7 +44,7 @@ router.route("/thanks").get((req, res) => {
                 signersList: signerList.rowCount
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => res.redirect("/petition"));
 });
 
 router.route("/signatures").get((req, res) => {
@@ -71,7 +71,7 @@ router.route("/signatures").get((req, res) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            console.log(res.redirect("/petition"));
         });
 });
 
@@ -99,6 +99,6 @@ router.route("/signatures/:city").get((req, res) => {
             });
         })
         .catch(err => {
-            console.log(err);
+            res.redirect("/signatures");
         });
 });

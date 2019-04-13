@@ -2,16 +2,6 @@ const bcrypt = require("bcryptjs");
 const passwordValidator = require("password-validator");
 const validator = require("validator");
 
-// legacy click handler approach
-// const register = document.querySelector("button input[name='register']");
-// const login = document.querySelector("button input[name='login']");
-//
-// const firstname = document.querySelector("input[name='firstname']");
-// const lastname = document.querySelector("input[name='lastname']");
-// const email = document.querySelector("input[type='email']");
-// const password = document.querySelector("input[type='password']");
-// const error = document.querySelector("div[name = 'error']");
-
 // Create a schema
 const schema = new passwordValidator();
 
@@ -131,7 +121,9 @@ module.exports.checkValidProfile = (age, url, city) => {
             : reject("invalid url");
         updatedProfileInputs.city = !city
             ? null
-            : validator.isAlpha(city)
+            : city.split(" ").every(word => {
+                  return validator.isAlpha(word);
+              })
             ? city
             : reject("invalid city");
         console.log(updatedProfileInputs);

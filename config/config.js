@@ -8,12 +8,12 @@ const favicon = require("express-favicon");
 const bodyParser = require("body-parser");
 dotenv.config();
 app.use(require("body-parser").urlencoded({ extended: false }));
-app.use(favicon(__dirname + "../public/favicon.ico"));
+app.use(favicon(path.join(__dirname + "/../public/favicon.ico")));
 
 //directory work
-app.use(express.static(path.join(__dirname, "../public")));
-app.use(express.static(path.join(__dirname, "../utils")));
-app.use(express.static(path.join(__dirname, "../db")));
+app.use(express.static(path.join(__dirname, "/../public")));
+app.use(express.static(path.join(__dirname, "/../utils")));
+app.use(express.static(path.join(__dirname, "/../db")));
 
 const db = require("../utils/db");
 const register = require("../utils/register");

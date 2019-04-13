@@ -1,12 +1,21 @@
+<h3>Mandate a <a href="https://www.wikiwand.com/en/Right_to_be_forgotten">Right To Be Forgotten</a> for Citizens of the United States of America</h3>
+
 <h5>In a time of largely misunderstood and nonconsensual data transactions of all sorts done with our information and establishing digital footprints that will have unforeseen consequences, we must provide a means for citizens to unplug and retain privacy in the digital world.</h5>
 
 <form class="signature" action="/petition" method="POST">
     <div class="names">
-        <input type="text" name="firstname" value="{{firstname}}" placeholder="First Name">
-        <input type="text" name="lastname" value="{{lastname}}" placeholder="Last Name">
+        <input type="text" name="firstname" value="{{firstname}}" placeholder="First Name"/>
+        <input type="text" name="lastname" value="{{lastname}}" placeholder="Last Name"/>
         <input type="hidden" name="signatureURL" />
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
     </div>
+    {{#if error}}
+        <div class="error">
+            <h5>{{error}}</h5>
+        </div>
+    {{else}}
+    {{/if}}
+
     <div class="sigcanvas">
         <canvas id="signature" height=100 width=400></canvas>
         <button type="submit" name="button">Submit</button>

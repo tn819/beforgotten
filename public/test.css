@@ -1,0 +1,263 @@
+* {
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+body,
+html {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+body {
+    background: #232323;
+    color: #fff;
+}
+.opaque {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.3;
+    background: #d2d6f1;
+}
+.feature {
+    position: fixed;
+    top: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    padding-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: url(https://www.thenology.com/wp-content/uploads/2016/04/6808193-road-tunnel-wallpaper-hd.jpg)
+        center center no-repeat;
+    background-attachment: fixed;
+    background-size: 200%;
+    box-shadow: 0 -50px 20px -20px #232323 inset;
+}
+.feature::after {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+}
+.content {
+    position: absolute;
+    padding-top: 30%;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.feature h1 {
+    position: relative;
+    top: 20px;
+    font-size: calc(50px + 3em);
+    opacity: 0.5;
+}
+h1 {
+    font-size: calc(30px + 2em);
+    width: 90%;
+    margin: 20px;
+    font-family: "Josefin Sans", sans-serif;
+    color: #fff;
+}
+h2 {
+    font-size: calc(20px + 1.5em);
+    width: 80%;
+    margin: 20px;
+    font-family: "Josefin Sans", sans-serif;
+    color: #fff;
+}
+h3 {
+    font-size: calc(15px + 1em);
+    font-family: "Josefin Sans", sans-serif;
+    width: 90%;
+    margin: 5px;
+}
+h3 {
+    font-size: calc(10px + 0.75em);
+    width: 90%;
+    margin: 5px;
+}
+h4 {
+    font-size: calc(12px + 0.5em);
+    width: 100%;
+    margin: 5px;
+    font-family: "Josefin Sans", sans-serif;
+}
+h5 {
+    font-size: calc(10px + 0.5em);
+    width: 90%;
+    margin: 5px;
+    font-family: "Josefin Sans", sans-serif;
+}
+h6 {
+    font-size: 12px;
+}
+a {
+    color: #39ff14;
+}
+a:visited {
+    color: yellow;
+    font-family: "Josefin Sans", sans-serif;
+}
+input {
+    font-size: calc(12px + 0.5em);
+    color: white;
+}
+/*FORM*/
+.signature {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 15px;
+}
+
+.names {
+    display: flex;
+    width: 100%;
+    min-height: 100px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.sigcanvas {
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-around;
+}
+.names input {
+    height: 30px;
+    min-width: 200px;
+}
+canvas {
+    width: 400px;
+    height: 100px;
+    border-radius: 15px;
+    border: 5px black solid;
+    background-color: white;
+}
+
+/*signatures*/
+.sigList {
+    display: grid;
+    width: 80%;
+    grid-template-rows: 60px;
+    grid-auto-rows: 40px;
+    position: relative;
+}
+.sigLine,
+.sigListTitle {
+    display: grid;
+    grid-template-columns: 4fr 1fr 4fr 4fr;
+    text-align: center;
+    padding-top: 10px;
+}
+.sigListTitle {
+    border-bottom: 5px black solid;
+}
+.sigLine div {
+    max-height: 100%;
+}
+.sigImage,
+button.delete {
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 5px;
+    border-radius: 15px;
+}
+
+/* Log-in and register */
+.error {
+    color: red;
+}
+
+a.button,
+button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+    font-size: 20px;
+    height: 30px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.confirm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 250px;
+    width: 45%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    text-align: center;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+    height: auto;
+}
+.login input {
+    height: 30px;
+    min-width: 300px;
+}
+.login div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login div input {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* PROFILE */
+.highlight {
+    background-color: gray;
+}
+input:valid {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+input:invalid {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+/* DELETE */
+.delete {
+    height: 40px;
+    width: 250px;
+}

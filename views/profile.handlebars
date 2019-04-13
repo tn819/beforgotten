@@ -13,8 +13,6 @@
         <div class="profileRow">
             <label for "city">Your city</label>
             <input type="text" name="city" placeholder="City"/>
-            <div class="cityresults">
-            </div>
         </div>
         {{#if error}}
             <div class="error">
@@ -23,7 +21,7 @@
         {{else}}
         {{/if}}
 
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
     </div>
     <button type="submit" name="profile">Submit</button>
 </form>

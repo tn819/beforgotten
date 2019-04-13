@@ -3,3 +3,9 @@
 <img src="invalid.jpg"/>
 
 <p><a href="/petition">Get back home</a></p>
+{{#if error}}
+    <div class="error">
+        <h5>{{error}}</h5>
+    </div>
+{{else}}
+{{/if}}

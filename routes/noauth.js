@@ -40,9 +40,10 @@ router
             .then(result => {
                 console.log("profile exists", !result.rows[0].exists);
                 if (!result.rows[0].exists) {
-                    return res.redirect("/profile");
+                    res.redirect("/profile");
+                } else {
+                    return db.getProfile(req.session.userid);
                 }
-                return db.getProfile(req.session.userid);
             })
             .then(result => {
                 console.log("profile result after login", result);
@@ -92,3 +93,9 @@ router
                 });
             });
     });
+
+router.route("/logout").get((req, res) => {
+    req.session = null;
+    console.log("logout route!", req.session);
+    res.redirect("/");
+});
