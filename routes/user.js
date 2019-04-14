@@ -6,7 +6,11 @@ const register = require("../utils/register");
 router
     .route("/profile")
     .get((req, res) => {
-        res.render("profile", { layout: "main" });
+        if (req.session.profileid) {
+            res.redirect("/petition");
+        } else {
+            res.render("profile", { layout: "main" });
+        }
     })
     .post((req, res) => {
         register

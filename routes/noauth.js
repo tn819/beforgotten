@@ -35,23 +35,35 @@ router
             })
             .then(result => {
                 console.log("password check result", result);
-                return db.existProfile(req.session.userid);
+                return db.getFullUser(req.session.userid);
             })
             .then(result => {
-                console.log("profile exists", !result.rows[0].exists);
-                if (!result.rows[0].exists) {
+                console.log(result);
+                if (!result.rows[0].profileid) {
                     res.redirect("/profile");
-                } else {
-                    return db.getProfile(req.session.userid);
+                } else if (!result.rows[0].sigid) {
+                    const { profileid, age, url } = result.rows[0];
+                    Object.assign(req.session, { profileid, age, url });
+                    res.redirect("/petition");
+                } else if (result.rows[0].sigid) {
+                    const {
+                        profileid,
+                        age,
+                        url,
+                        sigid,
+                        sigtime
+                    } = result.rows[0];
+                    Object.assign(req.session, {
+                        profileid,
+                        age,
+                        url,
+                        sigid,
+                        sigtime
+                    });
+                    res.redirect("/thanks");
                 }
             })
-            .then(result => {
-                console.log("profile result after login", result);
-                req.session.profileid = result.rows[0].profileid;
-                res.redirect("/petition");
-            })
             .catch(err => {
-                console.log(err);
                 return res.render("login", { layout: "main", error: err });
             });
     });

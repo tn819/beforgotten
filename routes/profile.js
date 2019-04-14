@@ -7,23 +7,15 @@ router
     .route("/petition")
     .get((req, res) => {
         console.log("GET petition route");
-        db.getSigner(req.session.userid)
-            .then(results => {
-                console.log("signer exists at petition page", results.rows[0]);
-                if (results.rows[0]) {
-                    req.session.sigid = results.rows[0].sigid;
-                    console.log(req.session);
-                    res.redirect("/thanks");
-                } else {
-                    return res.render("forms", {
-                        firstname: req.session.firstname,
-                        lastname: req.session.lastname
-                    });
-                }
-            })
-            .catch(err => {
-                console.log(err);
+        if (req.session.sigid) {
+            console.log(req.session);
+            res.redirect("/thanks");
+        } else {
+            return res.render("forms", {
+                firstname: req.session.firstname,
+                lastname: req.session.lastname
             });
+        }
     })
     .post((req, res) => {
         db.addSigner(req.body.signatureURL, req.session.userid)

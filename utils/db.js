@@ -39,7 +39,7 @@ exports.getUser = email => {
 
 exports.getFullUser = userid => {
     let q =
-        "SELECT email, firstname, lastname, signature, sigtime, age, city, url FROM users JOIN signatures ON signatures.userid = users.userid JOIN profiles ON signatures.userid = profiles.userid WHERE users.userid=$1";
+        "SELECT users.userid, profileid, sigid, email, firstname, lastname, signature, sigtime, age, city, url FROM users JOIN signatures ON signatures.userid = users.userid JOIN profiles ON signatures.userid = profiles.userid WHERE users.userid=$1";
     let params = [userid];
     return db.query(q, params);
 };
