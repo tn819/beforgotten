@@ -1,5 +1,7 @@
 <!doctype html>
 <html>
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+
 <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab|Josefin+Sans" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/test.css">
     <body>
@@ -13,7 +15,11 @@
           src="https://code.jquery.com/jquery-3.4.0.min.js"
           integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
           crossorigin="anonymous"></script>
-        <script src="/script.js"type="text/javascript"></script>
+          <script>
+              if (screen && screen.width > 518) {
+                document.write('<script type="text/javascript" src="/script.js"><\/script>');
+              }
+          </script>
         <script src="/signature.js"type="text/javascript"></script>
     </body>
 </html>

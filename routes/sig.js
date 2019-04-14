@@ -53,9 +53,7 @@ router.route("/signatures").get((req, res) => {
             let signers = [];
             results.rows.map(result =>
                 signers.push({
-                    sigtime: moment(result.sigtime).format(
-                        "dddd, MMMM Do YYYY"
-                    ),
+                    sigtime: moment(result.sigtime).format("MMMM Do YYYY"),
                     url: result.url,
                     age: result.age,
                     city: result.city,
