@@ -69,7 +69,7 @@ router
                 req.body.password
             )
             .then(inputs => {
-                console.log("registration inputs:", inputs);
+                console.log("registration inputs:");
                 return db.addUser(
                     inputs.firstname,
                     inputs.lastname,
@@ -78,7 +78,7 @@ router
                 );
             })
             .then(result => {
-                console.log("db registration inputs:", result);
+                console.log("db registration inputs:");
                 const { userid, firstname, lastname } = result.rows[0];
                 Object.assign(req.session, { userid, firstname, lastname });
                 res.redirect("/login");
