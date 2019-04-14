@@ -29,7 +29,7 @@ $(function() {
     } else {
         $(".feature").append('<div class="opaque"></div>');
         $(window).on("scroll", function() {
-            var opacity = 0.5 + $(window).scrollTop() / 50;
+            var opacity = 0.1 + $(window).scrollTop() / 500;
             $(".opaque").css("opacity", opacity);
         });
     }
