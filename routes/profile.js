@@ -55,9 +55,26 @@ router
                 res.render("update", { layout: "main", userInfo: userInfo });
             })
             .catch(err => {
+                let userInfo = {};
+                const {
+                    email,
+                    firstname,
+                    lastname,
+                    age,
+                    url,
+                    city
+                } = result.rows[0];
+                Object.assign(userInfo, {
+                    email,
+                    firstname,
+                    lastname,
+                    age,
+                    url,
+                    city
+                });
                 res.render("update", {
                     layout: "main",
-                    userInfo: {},
+                    userInfo: userInfo,
                     error: err
                 });
             });
