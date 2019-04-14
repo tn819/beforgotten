@@ -6,28 +6,39 @@ const register = require("../utils/register");
 router
     .route("/petition")
     .get((req, res) => {
-        return db.getFullUser(req.session.userid);
-    })
-    .then((req, res) => {
-        console.log("GET petition route");
-        if (!result.rows[0].sigid) {
-            const { profileid, age, url } = result.rows[0];
-            Object.assign(req.session, { profileid, age, url });
-            return res.render("forms", {
-                firstname: req.session.firstname,
-                lastname: req.session.lastname
+        db.getFullUser(req.session.userid)
+            .then(result => {
+                if (!result.rows[0].sigid) {
+                    const { profileid, age, url } = result.rows[0];
+                    Object.assign(req.session, { profileid, age, url });
+                    return res.render("forms", {
+                        firstname: req.session.firstname,
+                        lastname: req.session.lastname
+                    });
+                } else if (result.rows[0].sigid) {
+                    const {
+                        profileid,
+                        age,
+                        url,
+                        sigid,
+                        sigtime
+                    } = result.rows[0];
+                    Object.assign(req.session, {
+                        profileid,
+                        age,
+                        url,
+                        sigid,
+                        sigtime
+                    });
+                    res.redirect("/thanks");
+                }
+            })
+            .catch(err => {
+                return res.render("forms", {
+                    firstname: req.session.firstname,
+                    lastname: req.session.lastname
+                });
             });
-        } else if (result.rows[0].sigid) {
-            const { profileid, age, url, sigid, sigtime } = result.rows[0];
-            Object.assign(req.session, {
-                profileid,
-                age,
-                url,
-                sigid,
-                sigtime
-            });
-            res.redirect("/thanks");
-        }
     })
     .post((req, res) => {
         db.addSigner(req.body.signatureURL, req.session.userid)
