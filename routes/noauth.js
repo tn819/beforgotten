@@ -39,9 +39,9 @@ router
             })
             .then(result => {
                 console.log(result);
-                if (!result.rows[0].profileid) {
+                if (!result.rows[0]) {
                     res.redirect("/profile");
-                } else if (!result.rows[0].sigid) {
+                } else if (result.rows[0].profileid) {
                     const { profileid, age, url } = result.rows[0];
                     Object.assign(req.session, { profileid, age, url });
                     res.redirect("/petition");
