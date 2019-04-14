@@ -7,7 +7,7 @@ router
     .route("/login")
     .get((req, res) => {
         console.log("GET login route");
-        res.render("login", { layout: "main" });
+        res.render("login", { layout: "welcome" });
     })
     .post((req, res) => {
         console.log("POST login route");

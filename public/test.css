@@ -34,6 +34,7 @@ body {
     padding-top: 5%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
     background: url(https://www.thenology.com/wp-content/uploads/2016/04/6808193-road-tunnel-wallpaper-hd.jpg)
@@ -42,19 +43,24 @@ body {
     background-size: 200%;
     box-shadow: 0 -50px 20px -20px #232323 inset;
 }
-.feature::after {
-    position: fixed;
-    background-color: rgba(0, 0, 0, 0.6);
-    width: 100%;
-    height: 100%;
-}
+
 .content {
     position: absolute;
     padding-top: 30%;
     z-index: 1;
     width: 100vw;
-    height: 100vh;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.homecontent {
+    position: absolute;
+    padding-top: 100%;
+    z-index: 1;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,6 +74,11 @@ body {
     top: 20px;
     font-size: calc(50px + 3em);
     opacity: 0.5;
+}
+.feature a {
+    z-index: 2;
+    color: white;
+    font-family: "Josefin Sans", sans-serif;
 }
 h1 {
     font-size: calc(30px + 2em);

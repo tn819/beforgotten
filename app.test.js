@@ -11,6 +11,7 @@ describe("testing noauth route", () => {
             expect(200);
         });
     });
+
     test("redirect from GET profile page with unauth", () => {
         return request.get("/profile").then(() => {
             expect(302);
