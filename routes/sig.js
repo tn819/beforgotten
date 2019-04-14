@@ -15,6 +15,7 @@ router
                 .then(result => {
                     req.session.sigid = null;
                     req.session.signature = null;
+                    req.session.sigtime = null;
                     res.redirect("/");
                 })
                 .catch(err => {
