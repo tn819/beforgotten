@@ -24,10 +24,11 @@ schema
 const validatePassword = plainTextPassword => {
     return new Promise((resolve, reject) => {
         if (schema.validate(plainTextPassword)) {
-            console.log("validating pw", plainTextPassword);
             resolve(plainTextPassword);
         } else {
-            reject(schema.validate(plainTextPassword, { list: true }));
+            reject(
+                "Please enter a valid password with 8-16 characters with uppercase and lowercase letters, numbers and no space"
+            );
         }
     });
 };
@@ -91,7 +92,6 @@ module.exports.checkValidRegistration = (
             password = password.trim();
             validatePassword(password)
                 .then(result => {
-                    console.log("pw to be hashed", result);
                     return bcrypt.hash(result, 10);
                 })
                 .then(hashedPassword => {
