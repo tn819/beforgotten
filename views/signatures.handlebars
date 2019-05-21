@@ -1,0 +1,39 @@
+<h2>Look at who else has joined you {{ header }}</h2>
+<div class="sigList">
+    <div class="sigListTitle">
+        <div class="sigName">
+            <h3>Name</h3>
+        </div>
+        <div class="sigAge">
+            <h3>Age</h3>
+        </div>
+        <div class="sigDate">
+            <h3>Date</h3>
+        </div>
+        <div class="sigCity">
+            {{#if city}}
+                <h3>City</h3>
+            {{else}}
+            {{/if}}
+        </div>
+    </div>
+    {{#signers}}
+        <div class="sigLine">
+            <div class="sigName">
+                <a href="{{url}}"><h4>{{firstname}} {{lastname}}</h4></a>
+            </div>
+            <div class="sigAge">
+                <h4>{{age}}</h4>
+            </div>
+            <div class="sigDate">
+                <h4>{{sigtime}}</h4>
+            </div>
+            {{#if city}}
+                <div class="sigCity">
+                    <a href="signatures/{{city}}"><h4>{{city}}</h4></a>
+                </div>
+            {{else}}
+            {{/if}}
+        </div>
+    {{/signers}}
+</div>

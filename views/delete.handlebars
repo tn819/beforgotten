@@ -1,0 +1,17 @@
+<form class="signature" action="/delete" method="post">
+    <h1>Sorry to see you go</h3>
+    <div>
+        <button class="delete" type="submit" name="delete" value="signaturedelete">Remove my Signature</button>
+    </div>
+    <div>
+        <button class="delete" type="submit" name="delete" value="profiledelete">Delete my Profile</button>
+    </div>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    {{#if error}}
+        <div class="error">
+            {{error}}
+        </div>
+    {{else}}
+    {{/if}}
+</form>
+<h4><a href="petition">I changed my mind</a></h4>

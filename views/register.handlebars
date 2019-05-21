@@ -1,0 +1,32 @@
+<h1>Register to Support Your Right to be Forgotten</h1>
+<form class="signature" action="/register" method="POST">
+    <div class="login">
+        <div class="profileRow">
+            <h5>Email</h5>
+            <input type="email" name="email" placeholder="joe@acme.org" required/>
+        </div>
+        <div class="profileRow">
+            <h5>First Name</h5>
+            <input type="text" name="firstname" placeholder="First Name" required>
+        </div>
+        <div class="profileRow">
+            <h5>Last Name</h5>
+            <input type="text" name="lastname" placeholder="Last Name" required>
+        </div>
+
+        <div class="profileRow">
+            <h5>Password</h5>
+            <input type="password" name="password" placeholder="password" autocomplete="off" pattern="^(?=\S*\d)(?=\S*[A-Z])(?=\S*[a-z]).{8,16}$" required>
+            <h6><em>8-16 characters (no spaces) and include: lowercase and uppercase letters and a number</em></h6>
+        </div>
+
+        {{#if error}}
+            <div class="error">
+                {{error}}
+            </div>
+        {{else}}
+        {{/if}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </div>
+    <button type="submit" name="register">Register</button>
+</form>

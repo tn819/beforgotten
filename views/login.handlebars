@@ -1,0 +1,22 @@
+<h2 id="anchor">Right to be Forgotten</h2>
+
+<h3>Mandate a <a href="https://www.wikiwand.com/en/Right_to_be_forgotten">Right To Be Forgotten</a> for Citizens of the United States of America</h3>
+
+<form class="signature" action="/login" method="POST">
+    <div class="login">
+        <input type="email" name="email" placeholder="email"/>
+        <input type="password" name="password" placeholder="password" />
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    </div>
+    <div class="confirm">
+        <button type="submit" name="login">Log in</button>
+        <a class="button" href="register">Register</a>
+    </div>
+    {{#if error}}
+        <div class="error">
+            {{error}}
+        </div>
+    {{else}}
+    {{/if}}
+
+</form>
